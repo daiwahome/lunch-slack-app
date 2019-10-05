@@ -8,7 +8,7 @@ on:
       - '!*'
 
 jobs:
-  deploy:
+  deploy_functions:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -23,6 +23,30 @@ jobs:
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+      - name: Send notification to Slack
+        uses: 8398a7/action-slack@v2
+        with:
+          status: ${{ job.status }}
+          author_name: action-slack
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
+
+  deploy_storage_rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Deploy
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only storage
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
