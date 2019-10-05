@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import { App, ExpressReceiver } from '@slack/bolt';
-import { hello } from './hello';
+import { recommend } from './lunch';
 
 const config = functions.config();
 const expressReceiver = new ExpressReceiver({
@@ -13,10 +13,10 @@ const app = new App({
 });
 app.error(console.log);
 
-app.command('/hello', async ({ ack, say }) => {
-  ack();
-  say(hello());
-});
+app.command('/lunch', async ({ ack, say }) => {
+  ack()
+  say(await recommend())
+})
 
 exports.slack = functions
   .region('asia-northeast1')
