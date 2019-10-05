@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions';
 import { App, ExpressReceiver } from '@slack/bolt';
+import { hello } from './hello';
 
 const config = functions.config();
 const expressReceiver = new ExpressReceiver({
@@ -14,7 +15,7 @@ app.error(console.log);
 
 app.command('/hello', async ({ ack, say }) => {
   ack();
-  say("Hello");
+  say(hello());
 });
 
 exports.slack = functions
