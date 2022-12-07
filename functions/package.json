@@ -22,7 +22,7 @@
     "firebase-admin": "^11.3.0",
     "firebase-functions": "^3.1.0",
     "jest": "^29.3.1",
-    "ts-jest": "^24.1.0",
+    "ts-jest": "^29.0.3",
     "typemoq": "^2.1.0"
   },
   "devDependencies": {
